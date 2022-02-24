@@ -1,5 +1,5 @@
 import styles from './message.module.css';
-console.log(styles)
+// console.log(styles)
 
 export const Message = (props) => {
     console.log(props)
