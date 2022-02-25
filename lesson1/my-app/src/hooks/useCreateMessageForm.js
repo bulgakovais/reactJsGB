@@ -14,7 +14,7 @@ export const useCreateMessageForm = ({ onSubmit }) => {
     const handleSubmit = useCallback((event) => {
         // отменяем действие по умолчанию
         event.preventDefault()
-        onSubmit(inputValue)
+        onSubmit(inputValue, 'user')
         resetInputValue()
     }, [inputValue, onSubmit, resetInputValue])
 
