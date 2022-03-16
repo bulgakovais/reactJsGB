@@ -9,6 +9,10 @@ import reportWebVitals from './reportWebVitals';
 
 import { createTheme, ThemeProvider } from '@mui/material'
 
+import { store } from './store'
+import { Provider } from 'react-redux'
+
+
 const theme = createTheme({
   spacing: 8,
   palette: {
@@ -27,14 +31,16 @@ const theme = createTheme({
 })
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
+      </BrowserRouter>
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 reportWebVitals();
