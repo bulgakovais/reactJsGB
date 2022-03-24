@@ -1,34 +1,29 @@
 import React from 'react'
-import { useEffect, useRef } from 'react'
 import { ChatsList } from '../../components'
-import { useCreateMessageForm } from '../../hooks/useCreateMessageForm'
-import { useMessageList } from '../../hooks/useMessageList'
+import { Container, Paper, Grid, Input, Button, Box } from '@mui/material';
 
-import { Input, Container, Paper, Button, Box, List, ListItem, ListItemText, Grid } from '@mui/material';
+import { createMessage } from '../../store/messages/actions'
+import { useParams } from 'react-router-dom'
+import { useDispatch } from "react-redux"
+import { nanoid } from 'nanoid'
 
+export const Chats = ({ children }) => {
 
-export const Chats = () => {
+    const dispatch = useDispatch()
+    const { chatId } = useParams()
+    console.log(useParams())
+    console.log(chatId)
+    let inputValue = ''
+    const onChangeInput = (event) => {
+        inputValue = event.target.value
+    }
 
-    const { messageList, addNewMessage } = useMessageList()
-    const { handleSubmit, onChangeInput, inputValue } = useCreateMessageForm({ onSubmit: addNewMessage })
-    const messageText = 'Привет'
-
-    const inputRef = useRef(null)
-    // т.к. у useEffect нет зависимостей - он вызывается на каждый рендер страницы
-    useEffect(() => {
-        inputRef.current.focus()
-    })
-
-    useEffect(() => {
-        if (messageList.length === 0) {
-            return
-        }
-        const text = messageList[messageList.length - 1]
-        if (text.author === 'bot') {
-            return
-        }
-        addNewMessage(messageText, 'bot')
-    }, [messageList])
+    const handleCreateMessage = () => {
+        dispatch(createMessage(chatId, {
+            id: nanoid(),
+            name: inputValue
+        }))
+    }
 
     return (
         <Container maxWidth='xl' sx={{
@@ -39,40 +34,32 @@ export const Chats = () => {
             <Paper elevation={2} sx={{ padding: 2, height: '80vh', width: '100%' }}
             >
                 <Grid container spacing={2}>
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
+
+                        {/* СПИСОК ЧАТОВ */}
                         <ChatsList />
+
                     </Grid>
-                    <Grid item xs={10}>
+                    <Grid item xs={9}>
+
+                        {/* СПИСОК СООБЩЕНИЙ */}
+                        <Grid item xs={12}> {children}</Grid>
+
+                        {/* ФОРМА СОЗДАНИЯ СООБЩЕНИЯ */}
                         <Grid item xs={12}>
-                            <List>
-                                {
-                                    messageList.map((item) => {
-                                        return <ListItem className="list" key={item.id}>
-                                            <ListItemText sx={{ minWidth: '150px' }}>{item.author}</ListItemText>
-                                            <ListItemText sx={{ overflowWrap: 'break-word' }} primary={item.message} />
-                                        </ListItem>
-                                    })
-                                }
-                            </List>
+                            <Box component='form' sx={{ display: 'flex', marginTop: "25px", padding: "8px 16px" }}>
+                                <Grid item xs={6}>
+                                    <Input fullWidth={true} onChange={onChangeInput} type="text" />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Button type="submit" variant="outlined" sx={{ marginLeft: "25px" }} onClick={handleCreateMessage}>Отправить</Button>
+                                </Grid>
+                            </Box>
                         </Grid>
-
-
-                        <Box component='form' onSubmit={handleSubmit} sx={{ display: 'flex', marginTop: "25px", padding: "8px 16px" }}>
-                            <Grid item xs={6}>
-                                <Input inputRef={inputRef} fullWidth={true} value={inputValue} onChange={onChangeInput} type="text" />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Button type="submit" variant="outlined" sx={{ marginLeft: "25px" }}>Отправить</Button>
-                            </Grid>
-                        </Box>
-
 
                     </Grid>
                 </Grid>
-
             </Paper>
-
-
         </Container >
     );
 }
