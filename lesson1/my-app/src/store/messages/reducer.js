@@ -1,17 +1,9 @@
 import { CREATE_MESSAGE } from "./actions"
+// import { CREATE_CHAT } from '../chats/actions'
 // import { VIEW_MESSAGE } from "./actions"
 
 const initialState = {
     messagesList: {}
-
-    // { id: 1, name: 'привет' }, { id: 2, name: 'медвед' }
-    // {
-    //     1: [{ id: 11, message: 'hi' },
-    //     { id: 12, message: 'hif' },
-    //     { id: 13, message: 'hiff' },
-    //     { id: 14, message: 'hiffff' },]
-    // },
-    // { 2: [{ id: 15, message: '' }] }
 }
 
 
@@ -19,19 +11,32 @@ export const messageReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case (CREATE_MESSAGE): {
-            const { chatId, message } = action.payload
+            // const { chatId, message } = action.payload
+            // return {
+            //     ...state,
+            //     messagesList: [
+            //         ...state.messagesList,
+            //         message
+            //     ],
+
+            // }
             return {
                 ...state,
                 messagesList: {
-                    ...state.messagesList,
-                    [chatId]: [
-                        ...(state.messagesList[chatId] || []),
-                        message
+                    // ...state.messagesList,
+                    [action.payload.chatId]: [
+                        ...(state.messagesList[action.payload.chatId] || []),
+                        action.payload.message
                     ]
                 }
             }
         }
-
+        // case (CREATE_CHAT): {
+        //     return {
+        //         ...state,
+        //         [action.payload.chatId]: []
+        //     }
+        // }
         default:
             return state;
     }

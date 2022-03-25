@@ -1,12 +1,12 @@
 
 import React from 'react'
-import { Switch, Route, useParams } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import { Header } from './components'
 import { Chats } from './routes/ChatsRoutes'
 import { Home } from './routes/HomeRoute'
 import { Page404 } from './routes/Page404'
 import { Profile } from './routes/Profile'
-import { Messages } from './components/Messages'
+// import { Messages } from './components/Messages'
 
 import { store } from './store'
 import { Provider } from 'react-redux'
@@ -19,14 +19,9 @@ function App() {
 
       <Switch>
         <Route exact path="/" component={Home}></Route>
-        <Route path={'/chats'}>
+        <Route path="/chats/:chatId">
           <Chats>
 
-            {/* chatId НЕ ЗАПИСЫВАЕТСЯ В USEPARAMS!!!!???*/}
-
-            <Route path={':chatId'}>
-              <Messages />
-            </Route>
           </Chats>
         </Route>
         <Route exact path={"/profile"} component={Profile}></Route>

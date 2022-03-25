@@ -1,29 +1,42 @@
 import React from 'react'
 import { ChatsList } from '../../components'
-import { Container, Paper, Grid, Input, Button, Box } from '@mui/material';
-
+import { Container, Paper, Grid, Input, Button, Box, List, ListItem, ListItemText } from '@mui/material';
+import { getMessageList, getMessageListByChat, getMessageFromState } from '../../store/messages/selectors'
 import { createMessage } from '../../store/messages/actions'
 import { useParams } from 'react-router-dom'
+import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { nanoid } from 'nanoid'
 
-export const Chats = ({ children }) => {
+
+export const Chats = () => {
+    let { chatId } = useParams()
+    console.log(chatId)
+
+    // Здесь выдает ошибку:
+    // (selectors.js:3) Uncaught TypeError: Cannot read properties of undefined (reading 'message')
+    // При этом пока я не изменила messageReducer (initialState => {}), ошибки не было,
+    // селектор работал
+    const messageList = useSelector(getMessageListByChat(chatId))
+    console.log(messageList)
 
     const dispatch = useDispatch()
-    const { chatId } = useParams()
-    console.log(useParams())
-    console.log(chatId)
+
     let inputValue = ''
     const onChangeInput = (event) => {
         inputValue = event.target.value
     }
 
-    const handleCreateMessage = () => {
-        dispatch(createMessage(chatId, {
-            id: nanoid(),
-            name: inputValue
-        }))
+    const handleCreateMessage = (event) => {
+        event.preventDefault()
+        dispatch(createMessage(chatId,
+            {
+                id: nanoid(),
+                name: inputValue
+            }
+        ))
     }
+
 
     return (
         <Container maxWidth='xl' sx={{
@@ -43,8 +56,18 @@ export const Chats = ({ children }) => {
                     <Grid item xs={9}>
 
                         {/* СПИСОК СООБЩЕНИЙ */}
-                        <Grid item xs={12}> {children}</Grid>
-
+                        <Grid item xs={12}>
+                            <List>
+                                {
+                                    messageList.map((item) => {
+                                        return <ListItem className="list" key={item.id}>
+                                            <ListItemText sx={{ minWidth: '150px' }} primary={'Bot'} />
+                                            <ListItemText sx={{ overflowWrap: 'break-word' }} >{item.name}</ListItemText>
+                                        </ListItem>
+                                    })
+                                }
+                            </List>
+                        </Grid>
                         {/* ФОРМА СОЗДАНИЯ СООБЩЕНИЯ */}
                         <Grid item xs={12}>
                             <Box component='form' sx={{ display: 'flex', marginTop: "25px", padding: "8px 16px" }}>
