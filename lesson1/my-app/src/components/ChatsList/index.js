@@ -31,11 +31,11 @@ export const ChatsList = () => {
             id: itemId,
         }))
     }
-    const handleCreateMessage = (itemId) => {
-        dispatch(createMessage({
-            chatId: itemId,
-        }))
-    }
+    // const handleCreateMessage = (itemId) => {
+    //     dispatch(createMessage({
+    //         chatId: itemId,
+    //     }))
+    // }
 
     let classNames = classnames(styles.link);
 
@@ -48,7 +48,7 @@ export const ChatsList = () => {
                 {
                     chats?.map((item) => {
                         return <ListItem sx={{ display: 'flex', justifyContent: "space-between" }} key={item.id}>
-                            <Link to={`/chats/${item.id}`} className={classNames} onClick={() => { handleCreateMessage(item.id) }}>{item.name}</Link>
+                            <Link to={`/chats/${item.id}`} className={classNames}>{item.name}</Link>
                             <Button sx={{ color: 'darkred', fontSize: '10px' }} onClick={() => handleDeleteChat(item.id)}> х</Button>
                         </ListItem>
                     })

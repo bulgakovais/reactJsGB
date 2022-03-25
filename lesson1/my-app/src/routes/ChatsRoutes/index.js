@@ -7,18 +7,20 @@ import { useParams } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { nanoid } from 'nanoid'
-
+import { store } from '../../store'
 
 export const Chats = () => {
     let { chatId } = useParams()
     console.log(chatId)
 
-    // Здесь выдает ошибку:
+    // Здесь выдает ошибку, при вызове селектора:
     // (selectors.js:3) Uncaught TypeError: Cannot read properties of undefined (reading 'message')
     // При этом пока я не изменила messageReducer (initialState => {}), ошибки не было,
     // селектор работал
-    const messageList = useSelector(getMessageListByChat(chatId))
+    const messageList = store.getState().message.messagesList
+    let newList = messageList[chatId] || []
     console.log(messageList)
+    console.log(newList)
 
     const dispatch = useDispatch()
 
@@ -59,9 +61,10 @@ export const Chats = () => {
                         <Grid item xs={12}>
                             <List>
                                 {
-                                    messageList.map((item) => {
+                                    [newList].map((item) => {
+                                        console.log(item)
                                         return <ListItem className="list" key={item.id}>
-                                            <ListItemText sx={{ minWidth: '150px' }} primary={'Bot'} />
+                                            <ListItemText sx={{ minWidth: '150px' }} primary={'User'} />
                                             <ListItemText sx={{ overflowWrap: 'break-word' }} >{item.name}</ListItemText>
                                         </ListItem>
                                     })
