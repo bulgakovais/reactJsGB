@@ -6,7 +6,7 @@ import { Chats } from './routes/ChatsRoutes'
 import { Home } from './routes/HomeRoute'
 import { Page404 } from './routes/Page404'
 import { Profile } from './routes/Profile'
-// import { Messages } from './components/Messages'
+import { AllChats } from './routes/AllChats'
 
 import { store } from './store'
 import { Provider } from 'react-redux'
@@ -19,10 +19,11 @@ function App() {
 
       <Switch>
         <Route exact path="/" component={Home}></Route>
+        <Route exact path="/chats">
+          <AllChats />
+        </Route>
         <Route path="/chats/:chatId">
-          <Chats>
-
-          </Chats>
+          <Chats />
         </Route>
         <Route exact path={"/profile"} component={Profile}></Route>
 

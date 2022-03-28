@@ -5,7 +5,6 @@ import { nanoid } from 'nanoid';
 import classnames from 'classnames';
 import styles from './chats.module.css'
 import { useSelector, useDispatch } from 'react-redux'
-import { createMessage } from "../../store/messages/actions"
 import { getChatsList } from '../../store/chats/selectors'
 import { createChat, deleteChat } from '../../store/chats/actions'
 

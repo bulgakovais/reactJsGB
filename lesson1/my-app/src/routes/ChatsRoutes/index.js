@@ -13,7 +13,7 @@ export const Chats = () => {
     console.log(chatId)
 
     const messageList = useSelector(getMessageList)
-    let newList = messageList[chatId]
+    let newList = messageList[chatId] || []
     console.log(messageList)
     console.log(newList)
 
@@ -66,6 +66,7 @@ export const Chats = () => {
                                 }
                             </List>
                         </Grid>
+
                         {/* ФОРМА СОЗДАНИЯ СООБЩЕНИЯ */}
                         <Grid item xs={12}>
                             <Box component='form' sx={{ display: 'flex', marginTop: "25px", padding: "8px 16px" }}>
