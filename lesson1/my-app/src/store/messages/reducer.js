@@ -1,6 +1,5 @@
 import { CREATE_MESSAGE } from "./actions"
 import { DELETE_CHAT } from '../chats/actions'
-import { CREATE_CHAT } from '../chats/actions'
 
 const initialState = {
     messagesList: {}

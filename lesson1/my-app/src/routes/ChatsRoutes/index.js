@@ -2,7 +2,7 @@ import React from 'react'
 import { ChatsList } from '../../components'
 import { Container, Paper, Grid, Input, Button, Box, List, ListItem, ListItemText } from '@mui/material';
 import { getMessageList, getMessageListByChat, getMessageFromState } from '../../store/messages/selectors'
-import { createMessage } from '../../store/messages/actions'
+import { createMessageWhisThunk } from '../../store/messages/actions'
 import { useParams } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
@@ -26,12 +26,16 @@ export const Chats = () => {
 
     const handleCreateMessage = (event) => {
         event.preventDefault()
-        dispatch(createMessage(chatId,
+        event.target.value = ''
+        console.log(event.target.value)
+        dispatch(createMessageWhisThunk(chatId,
             {
                 id: nanoid(),
-                name: inputValue
+                name: inputValue,
+                author: "Irina"
             }
         ))
+
     }
 
 
@@ -51,7 +55,6 @@ export const Chats = () => {
 
                     </Grid>
                     <Grid item xs={9}>
-
                         {/* СПИСОК СООБЩЕНИЙ */}
                         <Grid item xs={12}>
                             <List>
@@ -59,7 +62,7 @@ export const Chats = () => {
                                     newList?.map((item) => {
                                         console.log(item)
                                         return <ListItem className="list" key={item.id}>
-                                            <ListItemText sx={{ minWidth: '150px' }} primary={'User'} />
+                                            <ListItemText sx={{ minWidth: '150px' }} primary={item.author} />
                                             <ListItemText sx={{ overflowWrap: 'break-word' }} >{item.name}</ListItemText>
                                         </ListItem>
                                     })
