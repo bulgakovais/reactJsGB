@@ -1,0 +1,15 @@
+.link{
+    text-decoration: none;
+    color: #222222;
+    font-size:18px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.link:hover{
+    color: #a1dca1
+}
+
+.btn_del{
+    color: darkred;
+    font-size:10px
+}
