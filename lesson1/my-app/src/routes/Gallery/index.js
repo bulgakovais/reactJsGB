@@ -1,82 +1,51 @@
 import React from 'react';
-import { useEffect, useState } from 'react'
-import { apiURL } from '../../utils/constants'
-import { List, ListItem, ListItemText } from '@mui/material'
+import { useEffect } from 'react'
 
+import { List, ListItem, ListItemText } from '@mui/material'
+import { useSelector, useDispatch } from "react-redux"
 import { CircularProgress } from '@mui/material';
+import { selectArticlesList, selectArticlesLoading, selectArticlesError } from '../../store/articles/selectors'
+import { getArticles } from '../../store/articles/actions'
+// const URL = 'https://docs.api.amethyste.moe/api-reference/image'
 
 export const Gallery = () => {
 
-    const [articles, setArticle] = useState([])
-    const [err, setErr] = useState(false)
-    const [loadings, setLoading] = useState(false)
+    const dispatch = useDispatch()
+    const articles = useSelector(selectArticlesList)
+    const isLoading = useSelector(selectArticlesLoading)
+    const isError = useSelector(selectArticlesError)
+
 
     const requestArticle = async () => {
-        setLoading(true)
-        try {
-            const response = await fetch(apiURL)
-
-            if (!response.ok) {
-                throw new Error('not ok')
-            }
-
-            const result = await response.json()
-
-            setErr(false)
-            setArticle(result)
-        } catch (err) {
-            console.warn(err)
-            setErr(true)
-        } finally {
-            setLoading(false)
-        }
+        // Диспатчим в миддлвар
+        dispatch(getArticles())
     }
-
-    // const URL = 'https://docs.api.amethyste.moe/api-reference/image'
 
     useEffect(() => {
         requestArticle()
-        // setLoading(true)
-        // fetch(apiURL)
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             throw new Error('not ok')
-        //         }
-
-        //         return response.json()
-        //     })
-        //         .then(response => {
-        //     setErr(false)
-        //     setArticle(response)
-        //     console.log(response)
-        // })
-        //     .catch(err => {
-        //         console.warn(err)
-        //         setErr(true)
-        //     })
-        //     .finally(() => setLoading(false))
     }, [])
 
     return (
         <div>
             <h1>Gallery</h1>
-            {loadings ? (<CircularProgress />) : (
+            {isLoading ? (<CircularProgress />) : (
                 <>
+                    {/* " !! " - приведение значения к булевому типу */}
                     <button onClick={requestArticle}>REQUEST</button>
-                    { err && <h4>Error</h4>}
-                    <List>
-                        {
-                            articles?.map((article) => {
-                                return <List>
-                                    <ListItem key={article.id}>
+                    { !!isError && <h4>Error: {isError}</h4>}
 
-                                        <ListItemText>{article.title}</ListItemText>
-                                        <ListItemText>{article.summary}</ListItemText>
-                                    </ListItem>
-                                </List>
-                            })
-                        }
-                    </List >
+                    {
+                        articles?.map((article) => {
+                            return <List>
+                                <ListItem key={article.id}>
+
+                                    <ListItemText>{article.title}</ListItemText>
+                                    {/* <ListItemText>{article.summary}</ListItemText> */}
+                                </ListItem>
+                            </List>
+                        })
+                    }
+
                 </>)}
         </div>
     )
