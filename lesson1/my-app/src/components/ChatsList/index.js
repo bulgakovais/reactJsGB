@@ -1,6 +1,7 @@
 
 import { List, ListItem, Button, FormControl, Input } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useState } from 'react'
 import { nanoid } from 'nanoid';
 import classnames from 'classnames';
 import styles from './chats.module.css'
@@ -12,10 +13,11 @@ export const ChatsList = () => {
 
     const chats = useSelector(getChatsList)
     const dispatch = useDispatch()
-    let inputValue = ''
+
+    const [inputValue, setInputValue] = useState('')
 
     const onChangeInput = (event) => {
-        inputValue = event.target.value
+        setInputValue(event.target.value)
     }
 
     const handleCreateChat = () => {
@@ -23,6 +25,7 @@ export const ChatsList = () => {
             id: nanoid(),
             name: inputValue,
         }))
+        setInputValue('')
     }
 
     const handleDeleteChat = (itemId) => {
@@ -49,7 +52,7 @@ export const ChatsList = () => {
                 }
             </List>
             <FormControl sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Input type="text" onChange={onChangeInput}></Input>
+                <Input type="text" value={inputValue} onChange={onChangeInput}></Input>
                 <Button variant="outlined" sx={{ marginTop: '40px' }} onClick={handleCreateChat}>Добавить чат</Button>
             </FormControl>
         </>

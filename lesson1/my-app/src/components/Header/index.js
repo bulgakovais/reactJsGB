@@ -10,6 +10,7 @@ export const Header = () => {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
             <Link to='/chats' className={classNames}>Список чатов</Link>
+            <Link to='/gallery' className={classNames}>Галерея</Link>
             <Link to='/profile' className={classNames}>Личный кабинет</Link>
         </Box>
     )
