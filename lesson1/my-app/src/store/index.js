@@ -14,7 +14,7 @@ const config = {
     key: 'root',
     storage, // по умолчанию это localStorage в браузере
     // whitelist: 'chatsReducer',  // только данные из этого редьюсера кэшируются
-    // blacklist: 'chatsReducer', //  данные этого редьюсера не кэшируются
+    blacklist: 'articles', //  данные этого редьюсера не кэшируются
 }
 
 const persistedReducer = persistReducer(config, combineReducers({
