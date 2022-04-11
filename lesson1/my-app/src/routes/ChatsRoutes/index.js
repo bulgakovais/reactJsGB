@@ -7,10 +7,15 @@ import { useParams } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { nanoid } from 'nanoid'
+import { useState } from "react"
+
+
 
 export const Chats = () => {
     let { chatId } = useParams()
     console.log(chatId)
+
+    let [value, setValue] = useState('')
 
     const messageList = useSelector(getMessageList)
     let newList = messageList[chatId] || []
@@ -19,23 +24,21 @@ export const Chats = () => {
 
     const dispatch = useDispatch()
 
-    let inputValue = ''
     const onChangeInput = (event) => {
-        inputValue = event.target.value
+        setValue(event.target.value)
     }
 
     const handleCreateMessage = (event) => {
         event.preventDefault()
-        event.target.value = ''
-        console.log(event.target.value)
+
         dispatch(createMessageWhisThunk(chatId,
             {
                 id: nanoid(),
-                name: inputValue,
+                name: value,
                 author: "Irina"
             }
         ))
-
+        setValue('')
     }
 
 
@@ -60,7 +63,7 @@ export const Chats = () => {
                             <List>
                                 {
                                     newList?.map((item) => {
-                                        console.log(item)
+                                        // console.log(item)
                                         return <ListItem className="list" key={item.id}>
                                             <ListItemText sx={{ minWidth: '150px' }} primary={item.author} />
                                             <ListItemText sx={{ overflowWrap: 'break-word' }} >{item.name}</ListItemText>
@@ -74,7 +77,7 @@ export const Chats = () => {
                         <Grid item xs={12}>
                             <Box component='form' sx={{ display: 'flex', marginTop: "25px", padding: "8px 16px" }}>
                                 <Grid item xs={6}>
-                                    <Input fullWidth={true} onChange={onChangeInput} type="text" />
+                                    <Input fullWidth={true} value={value} onChange={onChangeInput} type="text" />
                                 </Grid>
                                 <Grid item xs={6}>
                                     <Button type="submit" variant="outlined" sx={{ marginLeft: "25px" }} onClick={handleCreateMessage}>Отправить</Button>
