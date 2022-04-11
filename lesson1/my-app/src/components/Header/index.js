@@ -9,9 +9,10 @@ export const Header = () => {
     let classNames = classnames(styles.link);
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+            <Link to="/" className={classNames}>Главная страница</Link>
             <Link to='/chats' className={classNames}>Список чатов</Link>
             <Link to='/gallery' className={classNames}>Галерея</Link>
             <Link to='/profile' className={classNames}>Личный кабинет</Link>
-        </Box>
+        </Box >
     )
 }
