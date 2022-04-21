@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react'
 
-import { Link, List, ListItemText, Button } from '@mui/material'
+import { Link, List, ListItemText, Button, ListItem } from '@mui/material'
 import { useSelector, useDispatch } from "react-redux"
 import { CircularProgress } from '@mui/material';
 import { selectArticlesList, selectArticlesLoading, selectArticlesError } from '../../store/articles/selectors'
@@ -43,11 +43,11 @@ export const Gallery = () => {
 
     return (
         <List
-            sx={{ width: '100%', maxWidth: 1024, bgcolor: 'background.paper', margin: '50px' }}
+            sx={{ width: '100%', maxWidth: 1024, bgcolor: 'background.paper', marginTop: '50px' }}
             component="nav"
             aria-labelledby="nested-list-subheader"
             subheader={
-                <ListSubheader sx={{ fontSize: '22px', color: 'secondary' }} component="div" id="nested-list-subheader">
+                <ListSubheader sx={{ fontSize: '22px' }} component="div" id="nested-list-subheader">
                     Список статей
                 </ListSubheader>
             }
@@ -60,8 +60,8 @@ export const Gallery = () => {
 
                     {
                         articles?.map((article) => {
-                            return <>
-                                <ListItemButton onClick={handleClick}>
+                            return <ListItem key={article.id}>
+                                <ListItemButton onClick={handleClick} key={article.id}>
                                     <ListItemText>{article.newsSite}</ListItemText>
                                     {open ? <ExpandLess /> : <ExpandMore />}
                                 </ListItemButton>
@@ -73,7 +73,8 @@ export const Gallery = () => {
                                             <Link href='#'>Фото</Link>
                                         </ListItemButton>
                                     </List>
-                                </Collapse> </>
+                                </Collapse>
+                            </ListItem>
                         })
                     }
                     <Button sx={{ marginLeft: '50px' }} onClick={requestArticle}>Обновить</Button>

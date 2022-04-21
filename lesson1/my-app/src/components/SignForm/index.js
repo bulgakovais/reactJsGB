@@ -1,7 +1,9 @@
 import { useState } from "react"
-import { FormControl, Input, Button, TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
+import classnames from 'classnames';
+import styles from './signForm.module.css'
 
-export const SignForm = ({ onSubmit }) => {
+export const SignForm = ({ onSubmit, error, loading }) => {
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
 
@@ -21,32 +23,31 @@ export const SignForm = ({ onSubmit }) => {
         setPass('')
     }
 
+    let classNames = classnames(styles.form);
+    let classNameBtn = classnames(styles.btn)
     return (
-        <FormControl sx={{ display: 'flex', flexDirection: 'column', maxWidth: '800px' }} onSubmit={handleSubmit}>
-            <TextField sx={{ margin: '15px' }}
-                onChange={handleChangeEmail}
-                value={email}
-                type="text"
-                id="outlined-basic"
-                label="Email"
-                variant="outlined" />
-            {/* <Input onChange={handleChangeEmail} value={email} type="text">Email</Input> */}
-            <TextField
-                sx={{ margin: '15px' }}
-                id="outlined-password-input"
-                label="Пароль"
-                type="password"
-                autoComplete="current-password"
-                onChange={handleChangePass}
-                value={pass}
-            />
-            {/* <Input onChange={handleChangePass} value={pass} type="password">Пароль</Input> */}
-            <Button type="submit">Отправить</Button>
-        </FormControl>
+        <>
+            <form className={classNames} onSubmit={handleSubmit} >
+                <TextField sx={{ margin: '15px' }}
+                    onChange={handleChangeEmail}
+                    value={email}
+                    type="text"
+                    id="outlined-basic"
+                    label="Email"
+                    variant="outlined" />
+                <TextField
+                    sx={{ margin: '15px' }}
+                    id="outlined-password-input"
+                    label="Пароль"
+                    type="password"
+                    autoComplete="current-password"
+                    onChange={handleChangePass}
+                    value={pass}
+                />
+                <Button className={classNameBtn} type="submit">Отправить</Button>
+            </form>
+
+            {error && <h4>{error}</h4>}
+        </>
     )
-
-
-
-
-
 }

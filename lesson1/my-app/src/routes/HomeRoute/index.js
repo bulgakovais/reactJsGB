@@ -1,29 +1,37 @@
 import { React } from 'react';
-import { SignForm } from "../../components"
+import { SignForm } from "../../components/SignForm"
 import { Link } from "react-router-dom"
-import { useSelector, useDispatch } from "react-redux"
-import { selectAuth } from "../../store/profile/selectors"
 import classnames from 'classnames';
 import styles from './home.module.css'
-import { SIGN_IN } from "../../store/profile/actions"
+import { logIn } from '../../services/firebase'
+import { useState } from 'react'
+
 
 export const Home = () => {
 
-    const dispatch = useDispatch()
+    const [err, setErr] = useState('')
+    const [loading, setLoading] = useState(false)
 
-    const handleSignIn = () => {
-        dispatch({
-            type: SIGN_IN
-        })
+    const handleSignIn = async (email, pass) => {
+        setLoading(true)
+        try {
+            await logIn(email, pass)
+            setLoading(false)
+        }
+        catch (err) {
+            console.error(err)
+            setErr(err.message)
+        }
+        finally {
+            setLoading(false)
+        }
     }
 
     let classNames = classnames(styles.link, styles.margin);
 
-    // const authed = useSelector(selectAuth)
-    // console.log(authed)
     return (<>
 
-        <SignForm onSubmit={handleSignIn} />
+        <SignForm onSubmit={handleSignIn} error={err} loading={loading} />
         <Link to="/signup" className={classNames}>Зарегистрироваться</Link>
     </>
     )
