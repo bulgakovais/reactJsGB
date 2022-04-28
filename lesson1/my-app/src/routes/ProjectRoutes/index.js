@@ -1,12 +1,10 @@
 
 import { Routes, Route } from 'react-router-dom'
-import { Header } from '../../components'
-import { Chats } from '../ChatsRoutes'
+import { ChatsList, Header } from '../../components'
+import { ChatsRoutes } from '../ChatsRoutes'
 import { Home } from '../HomeRoute'
 import { Page404 } from '../Page404'
 import { Profile } from '../Profile'
-import { AllChats } from '../AllChats'
-
 import { Gallery } from '../Gallery'
 import { SignUp } from '../../components'
 import { PrivatRoute } from "../PrivatRoute"
@@ -37,15 +35,15 @@ export const ProjectRoutes = () => {
         <Routes>
             <Route path='/' element={<Header />}>
                 {/* в Header.index.js прописала <Outlet/> куда попадaют все руты, 
-                находящиеся в Route path='/' element={<Header />}  */}
+            находящиеся в Route path='/' element={<Header />}  */}
 
                 <Route index element={<PublicRoute><Home /></PublicRoute>} />
 
                 <Route path='signup' element={<SignUp />} />
-                <Route exact path="chats" element={<PrivatRoute><AllChats /></PrivatRoute>} />
 
+                <Route path="chats" element={<PrivatRoute><ChatsList /></PrivatRoute>} />
+                <Route path="chats/:chatId" element={<PrivatRoute><ChatsRoutes /></PrivatRoute>} />
 
-                <Route path="chats/:chatId" element={<PrivatRoute><Chats /></PrivatRoute>} />
                 <Route exact path={"profile"} element={<PrivatRoute><Profile /></PrivatRoute>} />
 
                 <Route path={"gallery"} element={<Gallery />} />
