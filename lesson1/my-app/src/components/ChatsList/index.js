@@ -66,7 +66,7 @@ export const ChatsList = () => {
                     chats?.map((item) => {
                         return <ListItem sx={{ display: 'flex', justifyContent: "space-between", paddingRight: '0px' }} key={item.id}>
                             <Link to={`/chats/${item.id}`} className={classLink}>{item.name}</Link>
-                            <Button sx={{ color: 'darkred', fontSize: '10px' }} onClick={() => handleDeleteChat(item.id)}> х</Button>
+                            <Button sx={{ color: '#f98b8b', fontSize: '10px', fontWeight: 'bold' }} variant="outlined" color="secondary" onClick={() => handleDeleteChat(item.id)}> х</Button>
                         </ListItem>
                     })
                 }

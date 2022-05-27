@@ -10,39 +10,39 @@ const initialState = {
 
 export const messageReducer = (state = initialState, action) => {
 
-    switch (action.type) {
-        case (CREATE_MESSAGE): {
-
-            return {
-                ...state,
-                messagesList: {
-                    ...state.messagesList,
-                    [action.payload.chatId]: [
-                        ...(state.messagesList[action.payload.chatId] || []),
-                        action.payload.message
-                    ]
+    switch (action?.type) {
+        case (CREATE_MESSAGE):
+            {
+                return {
+                    ...state,
+                    messagesList: {
+                        ...state.messagesList,
+                        [action.payload.chatId]: [
+                            ...(state.messagesList[action.payload.chatId] || []),
+                            action.payload.message
+                        ]
+                    }
                 }
             }
-        }
-        case (SET_MESSAGE): {
-            return {
-                messagesList: {
-                    ...(action.payload.messages)
+        case (SET_MESSAGE):
+            {
+                return {
+                    messagesList: {
+                        ...(action.payload.messages)
 
+                    }
                 }
             }
-        }
-        case (DELETE_CHAT): {
-            const newState = { ...state }
-            delete newState.messagesList[action.payload.chatId]
+        case (DELETE_CHAT):
+            {
+                const newState = { ...state }
+                delete newState.messagesList[action.payload.chatId]
 
-            return newState
-        }
+                return newState
+            }
 
-        case (REMOVE_MESSAGE_BY_CHAT_ID): {
-
-        }
         default:
             return state;
     }
+
 }
