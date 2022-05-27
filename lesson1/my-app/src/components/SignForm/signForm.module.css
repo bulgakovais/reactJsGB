@@ -1,0 +1,13 @@
+form {
+    display: flex;
+}
+
+.btn{
+    
+    align-self: center;
+    padding: 16.5px 14px;
+    height: auto;
+}
+.btn:hover{
+    color: #8fc48f
+}
