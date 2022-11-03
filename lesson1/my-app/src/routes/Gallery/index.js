@@ -1,26 +1,20 @@
 import React from 'react';
 import { useEffect } from 'react'
-
-import { Link, List, ListItemText, Button, ListItem } from '@mui/material'
+import { List, ListItemText, Button, ListItem } from '@mui/material'
 import { useSelector, useDispatch } from "react-redux"
 import { CircularProgress } from '@mui/material';
 import { selectArticlesList, selectArticlesLoading, selectArticlesError } from '../../store/articles/selectors'
 import { getArticles } from '../../store/articles/actions'
-// const URL = 'https://docs.api.amethyste.moe/api-reference/image'
 
 import ListSubheader from '@mui/material/ListSubheader';
 import ListItemButton from '@mui/material/ListItemButton';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-
 
 
 export const Gallery = () => {
 
     const dispatch = useDispatch()
     const articles = useSelector(selectArticlesList)
-    console.log(articles)
+
     const isLoading = useSelector(selectArticlesLoading)
     const isError = useSelector(selectArticlesError)
 
@@ -54,7 +48,6 @@ export const Gallery = () => {
         >
             {isLoading ? (<CircularProgress />) : (
                 <>
-                    {/* " !! " - приведение значения к булевому типу */}
 
                     { !!isError && <h4>Error: {isError}</h4>}
 
@@ -63,49 +56,15 @@ export const Gallery = () => {
                             return <ListItem key={article.id}>
                                 <ListItemButton onClick={handleClick} key={article.id}>
                                     <ListItemText>{article.newsSite}</ListItemText>
-                                    {open ? <ExpandLess /> : <ExpandMore />}
-                                </ListItemButton>
-                                <Collapse in={open} timeout="auto" unmountOnExit>
-                                    <List component="div" disablePadding>
-                                        <ListItemButton >
 
-                                            <ListItemText>{article.title}</ListItemText>
-                                            <Link href='#'>Фото</Link>
-                                        </ListItemButton>
-                                    </List>
-                                </Collapse>
+                                </ListItemButton>
+
                             </ListItem>
                         })
                     }
-                    <Button sx={{ marginLeft: '50px' }} onClick={requestArticle}>Обновить</Button>
+                    <Button sx={{ marginLeft: '20px' }} onClick={requestArticle}>Обновить</Button>
                 </>)
             }
         </List >
     );
 }
-
-    // return (
-    //     <div>
-    //         <h1>Gallery</h1>
-    //         {isLoading ? (<CircularProgress />) : (
-    //             <>
-    //                 {/* " !! " - приведение значения к булевому типу */}
-    //                 <button onClick={requestArticle}>REQUEST</button>
-    //                 { !!isError && <h4>Error: {isError}</h4>}
-
-    //                 {
-    //                     articles?.map((article) => {
-    //                         return <List>
-    //                             <ListItem key={article.id}>
-
-    //                                 <ListItemText>{article.title}</ListItemText>
-    //                                 {/* <ListItemText>{article.summary}</ListItemText> */}
-    //                             </ListItem>
-    //                         </List>
-    //                     })
-    //                 }
-
-    //             </>)}
-    //     </div>
-    // )
-// }

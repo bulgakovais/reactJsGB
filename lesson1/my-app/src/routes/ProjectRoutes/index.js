@@ -2,7 +2,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { ChatsList, Header } from '../../components'
 import { ChatsRoutes } from '../ChatsRoutes'
-import { Home } from '../HomeRoute'
+import { LoginRoute } from '../LoginRoute'
 import { Page404 } from '../Page404'
 import { Profile } from '../Profile'
 import { Gallery } from '../Gallery'
@@ -37,8 +37,7 @@ export const ProjectRoutes = () => {
                 {/* в Header.index.js прописала <Outlet/> куда попадaют все руты, 
             находящиеся в Route path='/' element={<Header />}  */}
 
-                <Route index element={<PublicRoute><Home /></PublicRoute>} />
-
+                <Route index element={<LoginRoute />} />
                 <Route path='signup' element={<SignUp />} />
 
                 <Route path="chats" element={<PrivatRoute><ChatsList /></PrivatRoute>} />

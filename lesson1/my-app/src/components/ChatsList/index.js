@@ -8,7 +8,7 @@ import styles from './chatsList.module.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { getChatsList } from '../../store/chats/selectors'
 import { createChat, setChats } from '../../store/chats/actions'
-import { chatsRef, getChatRefById } from '../../services/firebase'
+import { chatsRef, getChatMsgRefById, getChatRefById } from '../../services/firebase'
 import { onValue, set, remove } from "firebase/database"
 import { useEffect } from 'react';
 
@@ -55,17 +55,19 @@ export const ChatsList = () => {
     // Удаление чата
     const handleDeleteChat = (itemId) => {
         remove(getChatRefById(itemId))
+        remove(getChatMsgRefById(itemId))
     }
+
 
     return (
         <Container className={classContainer}  >
             <List>
-                <h3 color='secondary'>Chats:</h3>
+                <h3 color='secondary'>Мои чаты</h3>
 
                 {
                     chats?.map((item) => {
                         return <ListItem sx={{ display: 'flex', justifyContent: "space-between", paddingRight: '0px' }} key={item.id}>
-                            <Link to={`/chats/${item.id}`} className={classLink}>{item.name}</Link>
+                            <Link to={`/chats/${item.id}`} className={classLink}>{item.name} </Link>
                             <Button sx={{ color: '#f98b8b', fontSize: '10px', fontWeight: 'bold' }} variant="outlined" color="secondary" onClick={() => handleDeleteChat(item.id)}> х</Button>
                         </ListItem>
                     })

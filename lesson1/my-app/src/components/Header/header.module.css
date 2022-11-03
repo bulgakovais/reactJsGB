@@ -1,3 +1,8 @@
+body {
+    --main-color: 
+}
+
+
 .link{
     text-decoration: none;
     color: #ffffff;
@@ -12,3 +17,40 @@
     margin-top: 50px;
     margin-left: 20px;
 }
+.container_style{
+    /* display: flex; */
+    /* justify-content: center;
+    align-items: center; */
+    margin: 7vh 0;
+    min-height: 100vh;
+    /* background: #252839; */
+}
+.box_style{
+    margin: 5vh 2vh;
+    position: relative;
+    display: flex;
+    gap: 3em;
+}
+.link_style{
+    font-size: 1.5em;
+    text-decoration: none;
+    letter-spacing: 1px;
+    line-height: 1em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+}
+.link_style::before {
+    content: attr(data-text);
+    position: absolute;
+    color: var(--clr);
+    width: 0;
+    overflow: hidden;
+    transition: 1s;
+    border-right: 8px solid var(--clr);
+    -webkit-text-stroke: 1px var(--clr);
+  }
+  .link_style:hover::before {
+    width: 100%;
+    filter: drop-shadow(0 0 25px var(--clr))
+  }

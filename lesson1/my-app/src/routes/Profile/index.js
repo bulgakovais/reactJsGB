@@ -21,8 +21,11 @@ export const Profile = () => {
     }
 
     return (<div>
-        <Box sx={
-            { padding: '15px', marginTop: '50px', fontSize: '18px', color: '#0099FF', fontWeight: 'bold' }} > PROFILE </Box>
+        <Box sx={{
+            height: 60, marginTop: "40px", color: "white", marginLeft: '20px', fontSize: '20px'
+        }}>
+            Это Ваш личный кабинет. Скоро здесь вы сможете здесь написать что-нибудь интересное о себе.
+             </Box>
 
         <Button sx={
             { display: 'flex', marginTop: '20px', marginLeft: '10px' }}
