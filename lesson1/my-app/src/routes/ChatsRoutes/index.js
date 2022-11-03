@@ -1,90 +1,34 @@
 import React from 'react'
 import { ChatsList } from '../../components'
-import { Container, Paper, Grid, Input, Button, Box, List, ListItem, ListItemText } from '@mui/material';
-import { getMessageList, getMessageListByChat, getMessageFromState } from '../../store/messages/selectors'
-import { createMessageWhisThunk } from '../../store/messages/actions'
-import { useParams } from 'react-router-dom'
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
-import { nanoid } from 'nanoid'
+import { Container, Paper, Grid } from '@mui/material';
+import { Messages } from '../../components/Messages';
+import styles from './chatsRoute.module.css'
+import classnames from 'classnames';
 
-export const Chats = () => {
-    let { chatId } = useParams()
-    console.log(chatId)
+// (Компонент-контейнер)
+export const ChatsRoutes = () => {
 
-    const messageList = useSelector(getMessageList)
-    let newList = messageList[chatId] || []
-    console.log(messageList)
-    console.log(newList)
+    let classContainer = classnames(styles.container);
+    let classPaper = classnames(styles.paper);
 
-    const dispatch = useDispatch()
+    return (<Container maxWidth='xl'
+        className={classContainer}>
+        <Paper elevation={2}
+            className={classPaper}>
+            <Grid container spacing={2} >
+                <Grid item xs={3} >
 
-    let inputValue = ''
-    const onChangeInput = (event) => {
-        inputValue = event.target.value
-    }
+                    { /* СПИСОК ЧАТОВ И ФОРМА ДЛЯ СОЗДАНИЯ ЧАТА*/}
+                    <ChatsList />
 
-    const handleCreateMessage = (event) => {
-        event.preventDefault()
-        event.target.value = ''
-        console.log(event.target.value)
-        dispatch(createMessageWhisThunk(chatId,
-            {
-                id: nanoid(),
-                name: inputValue,
-                author: "Irina"
-            }
-        ))
-
-    }
-
-
-    return (
-        <Container maxWidth='xl' sx={{
-            display: 'flex',
-            alignItems: 'center',
-            height: '100vh'
-        }}>
-            <Paper elevation={2} sx={{ padding: 2, height: '80vh', width: '100%' }}
-            >
-                <Grid container spacing={2}>
-                    <Grid item xs={3}>
-
-                        {/* СПИСОК ЧАТОВ */}
-                        <ChatsList />
-
-                    </Grid>
-                    <Grid item xs={9}>
-                        {/* СПИСОК СООБЩЕНИЙ */}
-                        <Grid item xs={12}>
-                            <List>
-                                {
-                                    newList?.map((item) => {
-                                        console.log(item)
-                                        return <ListItem className="list" key={item.id}>
-                                            <ListItemText sx={{ minWidth: '150px' }} primary={item.author} />
-                                            <ListItemText sx={{ overflowWrap: 'break-word' }} >{item.name}</ListItemText>
-                                        </ListItem>
-                                    })
-                                }
-                            </List>
-                        </Grid>
-
-                        {/* ФОРМА СОЗДАНИЯ СООБЩЕНИЯ */}
-                        <Grid item xs={12}>
-                            <Box component='form' sx={{ display: 'flex', marginTop: "25px", padding: "8px 16px" }}>
-                                <Grid item xs={6}>
-                                    <Input fullWidth={true} onChange={onChangeInput} type="text" />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Button type="submit" variant="outlined" sx={{ marginLeft: "25px" }} onClick={handleCreateMessage}>Отправить</Button>
-                                </Grid>
-                            </Box>
-                        </Grid>
-
-                    </Grid>
                 </Grid>
-            </Paper>
-        </Container >
-    );
+                <Grid item xs={9} >
+
+                    { /* СПИСОК СООБЩЕНИЙ И ФОРМА ДЛЯ ВВОДА СООБЩЕНИЯ */}
+                    <Messages > </Messages>
+
+                </Grid>
+            </Grid>
+        </Paper>
+    </Container >);
 }
