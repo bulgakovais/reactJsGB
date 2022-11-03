@@ -30,12 +30,17 @@ export const SignUp = () => {
     }
 
     return (
+
         <>
-            <Typography sx={{ margin: '65px 0 25px 20px' }} variant="h5" gutterBottom component="div">
-                Зарегистрироваться
-            </Typography>
 
             <SignForm onSubmit={handleSignUp} error={err} loading={loading} ></SignForm>
+
+
+            <Typography sx={{ margin: '65px 0 25px 20px' }} variant="h5" gutterBottom component="div">
+                А если аккаунта еще нет - Зарегистрироваться
+            </Typography>
+
+
 
             <Link className={classNames} to="/">Войти в имеющийся аккаунт</Link>
         </>

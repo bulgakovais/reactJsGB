@@ -19,3 +19,7 @@
     padding: 20px;
     height: 100vh;
 }
+
+.active-chat{
+    color: rgb(6, 6, 100);
+}
