@@ -1,7 +1,6 @@
 import { SignForm } from "../SignForm"
 import { useState } from 'react'
 import { Link } from "react-router-dom"
-
 import classnames from 'classnames';
 import styles from './signUp.module.css'
 import { Typography } from '@mui/material'
