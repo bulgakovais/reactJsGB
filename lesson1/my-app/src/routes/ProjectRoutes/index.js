@@ -5,10 +5,8 @@ import { ChatsRoutes } from '../ChatsRoutes'
 import { LoginRoute } from '../LoginRoute'
 import { Page404 } from '../Page404'
 import { Profile } from '../Profile'
-import { Gallery } from '../Gallery'
 import { SignUp } from '../../components'
 import { PrivatRoute } from "../PrivatRoute"
-import { PublicRoute } from "../PublicRoute"
 import { auth } from '../../services/firebase'
 import { useDispatch } from "react-redux"
 import { useEffect } from 'react'
@@ -45,7 +43,6 @@ export const ProjectRoutes = () => {
 
                 <Route exact path={"profile"} element={<PrivatRoute><Profile /></PrivatRoute>} />
 
-                <Route path={"gallery"} element={<Gallery />} />
                 <Route path={"*"} element={<Page404 />} />
 
             </Route>

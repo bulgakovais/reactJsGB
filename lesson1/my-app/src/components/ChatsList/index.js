@@ -42,6 +42,10 @@ export const ChatsList = () => {
     // Добавление чата
     const handleCreateChat = () => {
 
+        if (inputValue === '') {
+            alert("Введите название чата")
+            return
+        }
         const newChatId = `${inputValue}${nanoid()}`
         dispatch(createChat({
             id: newChatId,
@@ -50,6 +54,7 @@ export const ChatsList = () => {
         set(getChatRefById(newChatId), { name: inputValue, id: newChatId })
 
         setInputValue('')
+
     }
 
     // Удаление чата
@@ -73,7 +78,7 @@ export const ChatsList = () => {
                     })
                 }
             </List>
-            <FormControl sx={{ display: 'flex', flexDirection: 'column' }}>
+            <FormControl sx={{ display: 'flex', flexDirection: 'column', marginTop: '5em' }}>
                 <Input type="text" value={inputValue} onChange={onChangeInput}></Input>
                 <Button variant="contained" color="secondary" sx={{ marginTop: '40px' }} onClick={handleCreateChat}>Добавить чат</Button>
             </FormControl>
